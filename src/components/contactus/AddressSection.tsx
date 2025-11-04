@@ -23,7 +23,8 @@ function AddressSection() {
             title: "Phone",
             date: "Mon-Fri 9am to 5pm.",
             location: "(WhatsApp)",
-            locationtwo: "+16195198014"
+            // locationtwo: "+16195198014"
+            locationtwo: "+2348138725215"
         },
     ]
 
