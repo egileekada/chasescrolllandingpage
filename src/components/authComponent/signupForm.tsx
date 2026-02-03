@@ -1,5 +1,5 @@
 "use client";
-import { Box, Checkbox, Flex, Link, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import { CustomButton, CustomInput, ModalLayout } from "../shared";
 import { useEffect, useState } from "react";
 import { CloseIcon } from "@/svg";
