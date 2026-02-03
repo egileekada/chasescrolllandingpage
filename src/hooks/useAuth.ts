@@ -62,10 +62,6 @@ const useAuth = () => {
                 }
             }
 
-
-            console.log(data?.data?.localizedMessage);
-
-
         },
     });
 

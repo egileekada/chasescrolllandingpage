@@ -8,7 +8,9 @@ import { Flex } from "@chakra-ui/react";
 import { CustomButton, CustomInput, GoogleBtn } from "@/components/shared";
 import useAuth from "@/hooks/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
-import VerficationForm from "@/components/authComponent/verificationForm";
+import VerficationForm from "@/components/authComponent/verificationForm"; 
+
+
 
 export default function AuthPage() {
 
@@ -22,6 +24,7 @@ export default function AuthPage() {
     const clickHandler = () => {
         router?.push(`/auth/signup${eventId ? `?eventId=${eventId}` : ""}${productId ? `?productId=${productId}` : ""}${create ? `?create=${create}` : ""}`)
     }
+
 
     return (
         <Flex justifyContent={"center"} alignItems={"center"} color={"black"} bgColor={"#FCFCFC"} h={"full"} w={"full"} position={"relative"} >

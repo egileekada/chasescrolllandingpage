@@ -14,7 +14,7 @@ type Props = {
   session: Session | null
 }
 
-export function Providers({
+export default function Providers({
   children,
   session
 }: Props) {

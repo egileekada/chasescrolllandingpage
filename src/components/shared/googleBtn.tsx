@@ -47,7 +47,7 @@ export default function GoogleBtn({
         onError: (error: any) => {
 
         }
-    })
+    }) 
 
     useEffect(() => {
         if ((formik.values.username + "")?.length >= 2) {
@@ -74,7 +74,7 @@ export default function GoogleBtn({
                         <Text mt={"-2"} ml={"auto"} color={userNameCheck?.includes("exists") ? "red" : "#5D70F9"} fontSize={"12px"} fontWeight={"500"} >{userNameCheck}</Text>
                     )}
                     <CustomInput label="phone" name='phone' phone={true} type="tel" placeholder='' errors={formik.errors} touched={formik.touched} value={formik?.values} setValue={formik?.setFieldValue} />
-                    <Button loading={editProfile?.isPending} onClick={() => formik.handleSubmit()} mt={"4"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#233DF3"} bgColor={"white"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "white" }} justifyContent={"center"} alignItems={"center"} >
+                    <Button disabled={(userNameCheck?.includes("exists") || formik.values.username?.length <= 2 || !formik.values.firstName || !formik.values.lastName || !formik.values.phone || checkUserName.isPending ) ? true : false} loading={editProfile?.isPending} onClick={() => formik.handleSubmit()} mt={"4"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#233DF3"} bgColor={"white"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "white" }} justifyContent={"center"} alignItems={"center"} >
                         <Text color={"#233DF3"} textAlign={"center"} fontWeight={"600"} >Submit</Text>
                     </Button>
                 </Flex>
