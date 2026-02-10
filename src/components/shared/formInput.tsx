@@ -1,4 +1,5 @@
 "use client"
+import { allowOnlyAlphaNumericNoSpace } from '@/helpers/utils/inputfilter';
 import { Flex, Input, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
@@ -43,7 +44,10 @@ export default function FormInput(
     }: IProps) {
 
     const changeHandler = (item: string) => {
-        setValue(name, item)
+
+    const sanitizedValue = 
+    name === "firstName" || name === "lastName" || "username" ? allowOnlyAlphaNumericNoSpace(item) : item
+        setValue(name, sanitizedValue)
     }
 
     const [newValue, setNewValue] = useState("")
@@ -103,7 +107,6 @@ export default function FormInput(
                             country={"ng"}
                             enableSearch
                             // style={{ width: '100%', height: '45px', borderWidth: '1px', borderRadius: '5px', borderColor: 'lightgrey', padding: '10px' }}
-
                             containerStyle={{
                                 borderRadius: '32px',
                                 overflow: 'hidden',

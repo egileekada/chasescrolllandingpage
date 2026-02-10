@@ -222,7 +222,7 @@ const useAuth = () => {
             username: Yup.string()
                 .required("Required")
                 .trim()
-                .min(2, "User name must be at least 2 characters"),
+                .min(3, "User name must be at least 2 characters"),
             password: Yup.string()
                 .min(8, "Password must be at least 8 characters")
                 .required("Required"),
@@ -232,11 +232,11 @@ const useAuth = () => {
             firstName: Yup.string()
                 .required("Required")
                 .trim()
-                .min(2, "First name must be at least 2 characters"),
+                .min(3, "First name must be at least 2 characters"),
             lastName: Yup.string()
                 .required("Required")
                 .trim()
-                .min(2, "Last name must be at least 2 characters"),
+                .min(3, "Last name must be at least 2 characters"),
             dob: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email").required("Required"),
         }),
