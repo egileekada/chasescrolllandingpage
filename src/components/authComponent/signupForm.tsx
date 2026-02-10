@@ -44,11 +44,21 @@ export default function SignUpForm({
     }, [formik.values.username]);
 
     const clickHandler = () => {
+        const trimmedValues = {
+            ...formik.values,
+            firstName: formik.values.firstName?.trim(),
+            lastName: formik.values.lastName?.trim(),
+            email: formik.values.email?.trim(),
+        };
+
+        // push trimmed values back into formik (optional but recommended)
+        formik.setValues(trimmedValues);
+
         if (
-            formik.values.dob &&
-            formik.values.firstName &&
-            formik.values.lastName &&
-            formik.values.email
+            trimmedValues.dob &&
+            trimmedValues.firstName &&
+            trimmedValues.lastName &&
+            trimmedValues.email
         ) {
             setTab(true);
         } else {
@@ -283,7 +293,20 @@ export default function SignUpForm({
                             <CustomButton
                                 text={"Submit"}
                                 mt={"4"}
-                                disable={(userNameCheck?.includes("exists") || formik.values.username?.length <= 2 || !formik.values.firstName || !formik.values.lastName || !formik.values.phone || !formik.values.password || !formik.values.confirmPassword || !formik.values.dob || !formik.values.email || signupPending) ? true : false}
+                                disable={
+                                    userNameCheck?.includes("exists") ||
+                                    formik.values.username?.length <= 2 ||
+                                    !formik.values.firstName ||
+                                    !formik.values.lastName ||
+                                    !formik.values.phone ||
+                                    !formik.values.password ||
+                                    !formik.values.confirmPassword ||
+                                    !formik.values.dob ||
+                                    !formik.values.email ||
+                                    signupPending
+                                        ? true
+                                        : false
+                                }
                                 isLoading={signupPending}
                                 onClick={() => formik.handleSubmit()}
                                 borderRadius={"999px"}
