@@ -1,5 +1,5 @@
 "use client"
-import { allowOnlyAlphaNumericNoSpace } from '@/helpers/utils/inputfilter';
+import { allowOnlyAlphaNoSpace, allowOnlyAlphaNumericNoSpace } from '@/helpers/utils/inputfilter';
 import { Flex, Input, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
@@ -46,7 +46,7 @@ export default function FormInput(
     const changeHandler = (item: string) => {
 
     const sanitizedValue = 
-    name === "firstName" || name === "lastName" || name === "username" ? allowOnlyAlphaNumericNoSpace(item) : item
+    name === "firstName" || name === "lastName" ? allowOnlyAlphaNoSpace(item) : name === "username" ? allowOnlyAlphaNumericNoSpace(item) : item
         setValue(name, sanitizedValue)
     }
 

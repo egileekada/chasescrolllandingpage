@@ -56,8 +56,8 @@ export default function SignUpForm({
 
         if (
             trimmedValues.dob &&
-            trimmedValues.firstName &&
-            trimmedValues.lastName &&
+            trimmedValues.firstName.length > 2 &&
+            trimmedValues.lastName.length > 2 &&
             trimmedValues.email
         ) {
             setTab(true);
