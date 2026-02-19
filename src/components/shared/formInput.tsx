@@ -46,7 +46,7 @@ export default function FormInput(
     const changeHandler = (item: string) => {
 
     const sanitizedValue = 
-    name === "firstName" || name === "lastName" ? allowOnlyAlphaNoSpace(item) : name === "username" ? allowOnlyAlphaNumericNoSpace(item) : item
+    name === "firstName" || name === "lastName" ? allowOnlyAlphaNoSpace(item) : item
         setValue(name, sanitizedValue)
     }
 
