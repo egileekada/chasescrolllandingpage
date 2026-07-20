@@ -33,7 +33,7 @@ export default function HeroSection() {
     return (
         <Flex w={"full"} h={[ "100vh"]} color={"white"} pos={"relative"} >
             <Flex pos={"absolute"} inset={"0px"} zIndex={"10"} style={{ background: "linear-gradient(116.54deg, rgba(84, 101, 224, 0) -7.35%, rgba(35, 61, 243, 0.2) 41.22%), linear-gradient(228.39deg, rgba(0, 0, 0, 0) -57.53%, rgba(0, 0, 0, 0.4) 90.44%), linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))" }} />
-            <Image src='/images/hero/hero.png' alt='hero' w={"full"} objectFit={"cover"} />
+            <Image src='/images/hero/newhero.jpg' alt='hero' w={"full"} objectFit={"cover"} />
             <Flex pos={"absolute"} insetX={"0px"} bottom={"0px"} top={["64px", "64px", "101.03px"]} gap={"8"} px={["6", "6", "16"]} flexDirection={"column"} justifyContent={"center"} zIndex={"20"} >
                 <Text
                     ref={ref}
