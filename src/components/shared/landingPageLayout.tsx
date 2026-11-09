@@ -1,44 +1,68 @@
-"use client"
-import { Box, Flex, Grid } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import FooterLandingPage from './footer'
-import HomeNavbar from './navbar' 
-import { useElementScroll } from 'framer-motion'
-
+"use client";
+import { Box, Flex } from "@chakra-ui/react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import FooterLandingPage from "./footer";
+import HomeNavbar from "./navbar";
 
 interface IProps {
-    children: React.ReactNode
+    children: React.ReactNode;
 }
 
-export default function LandingPageLayout({ children }: IProps) { 
+export default function LandingPageLayout({ children }: IProps) {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [yaxis, setYaxis] = useState(0);
 
-    const reftwo: any = React.useRef(null)
-    const { scrollY } = useElementScroll(reftwo)
+    const handleScroll = useCallback(() => {
+        if (scrollRef.current) {
+            setYaxis(scrollRef.current.scrollTop);
+        } else if (typeof window !== "undefined") {
+            setYaxis(window.scrollY);
+        }
+    }, []);
 
-    const [yaxis, setYaxis] = useState(0)
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (container) {
+            container.addEventListener("scroll", handleScroll, { passive: true });
+            // Initial check
+            handleScroll();
+            return () => {
+                container.removeEventListener("scroll", handleScroll);
+            };
+        } else if (typeof window !== "undefined") {
+            window.addEventListener("scroll", handleScroll, { passive: true });
+            handleScroll();
+            return () => {
+                window.removeEventListener("scroll", handleScroll);
+            };
+        }
+    }, [handleScroll]);
 
-    React.useEffect(() => {
-        const unsubscribeY = scrollY.onChange((latest) => { 
-            setYaxis(latest)
-        }) 
-        return () => unsubscribeY()
-    }, [scrollY])
- 
     return (
-        <Box overflow={"hidden"} w={"full"} bgColor={"white"} color={"black"} >
-            <Grid h="100vh" w={"full"} overflow={"hidden"} >
-                <HomeNavbar yaxis={yaxis} />
-                <Flex w="full" h="full" overflow={"hidden"}>
-                    <Flex ref={reftwo} w={"full"} h={"full"} flexDirection={"column"} overflowX={"hidden"} overflowY={"auto"} >
-                        {children}
-                        <FooterLandingPage />
-                    </Flex>
-                </Flex>
-            </Grid>
+        <Box
+            w={"full"}
+            h={"100vh"}
+            bgColor={"white"}
+            color={"black"}
+            pos={"relative"}
+            overflow={"hidden"}
+        >
+            <HomeNavbar yaxis={yaxis} />
+            <Flex
+                ref={scrollRef}
+                w={"full"}
+                h={"100vh"}
+                flexDirection={"column"}
+                overflowX={"hidden"}
+                overflowY={"auto"}
+                scrollBehavior={"smooth"}
+                style={{ WebkitOverflowScrolling: "touch" }}
+            >
+                <Box as="main" w={"full"} flex={"1"}>
+                    {children}
+                </Box>
+                <FooterLandingPage />
+            </Flex>
         </Box>
-    )
+    );
 }
-
-
-
-

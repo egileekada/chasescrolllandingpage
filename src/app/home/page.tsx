@@ -1,19 +1,30 @@
-"use client"    
-import Faq from "@/components/home/FAQ"
-import { GetThingDone, HeroSection, AboutEventSection, EventOrganiserSection, ProfessionService, UserComment, ServiceProvider } from "@/components/home"  
-import { Flex } from "@chakra-ui/react" 
+"use client";
+import React from "react";
+import {
+  HeroSection,
+  CuratedEventsSection,
+  AboutEventSection,
+  GetThingDone,
+  EventOrganiserSection,
+  ProfessionService,
+  ServiceProvider,
+  UserComment,
+  FAQ,
+} from "@/components/home";
+import { Flex } from "@chakra-ui/react";
 
 export default function Home() {
-    return ( 
-      <Flex flexDir={"column"} color={"black"} w={"full"} >
+  return (
+    <Flex flexDir={"column"} color={"black"} w={"full"} overflowX={"hidden"}>
       <HeroSection />
+      <CuratedEventsSection />
       <AboutEventSection />
       <GetThingDone />
       <EventOrganiserSection />
       <ProfessionService />
-      <ServiceProvider/> 
+      <ServiceProvider />
       <UserComment />
-      <Faq />
+      <FAQ />
     </Flex>
-    )
+  );
 }

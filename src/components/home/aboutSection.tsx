@@ -1,121 +1,197 @@
-"use client"
-import useCustomTheme from '@/hooks/useTheme'
-import { Flex, Text } from '@chakra-ui/react'
-import { useInView } from 'framer-motion'
-import { useRouter } from 'next/navigation'
-import { useRef } from 'react' 
-import { CustomButton } from '../shared'
-import { GreenTickTwo } from '@/svg' 
-import YouTube from 'react-youtube';
+"use client";
+import React, { useRef } from "react";
+import useCustomTheme from "@/hooks/useTheme";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { useInView } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { LuUserPlus, LuClipboardCheck, LuPiggyBank } from "react-icons/lu";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 export default function AboutEventSection() {
-
-    const { primaryColor } = useCustomTheme()
-
-    const ref: any = useRef(null);
+    const { primaryColor } = useCustomTheme();
+    const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true });
-    const reftwo: any = useRef(null);
-    const isInViewtwo = useInView(reftwo, { once: true });
-    const { push } = useRouter()
+    const { push } = useRouter();
 
-
-    interface IProps { 
-        video?: boolean,
-        url?: string
-    }
-
-    const opts = {
-        height: '330',
-        width: '512',
-        playerVars: {
-            autoplay: 0,
+    const perks = [
+        {
+            icon: LuUserPlus,
+            iconBg: "#EEF2FF",
+            iconColor: "#4F46E5",
+            title: "No cost to join",
+            desc: "Register and browse talent profiles, explore curated upcoming events, or list your premier event rentals with zero upfront subscription costs.",
         },
-        control: false
-    };
-
-    const optsmobile = {
-        height: '220',
-        width: '320',
-        playerVars: {
-            autoplay: 0,
+        {
+            icon: LuClipboardCheck,
+            iconBg: "#FFF1E8",
+            iconColor: "#EA580C",
+            title: "Request a service and hire top professionals",
+            desc: "Finding professionals doesn't have to be a task. Request bespoke catering, sound engineering, photography, or DJ services while creating your event or search straight from our verified directory.",
         },
-    };
-
-    const Video = (props: IProps) => {
-
-        const {
-            url
-        } = props
-
-        return (
-            <Flex w={"full"} h={["220px", "220px", "330px"]} bgColor={"white"} justifyContent={"center"} rounded={"14px"} alignItems={"center"}  >
-                <Flex display={["none", "none", "flex"]} >
-                    <YouTube className=" videoborder " videoId={url} opts={opts} />
-                </Flex>
-                <Flex display={["flex", "flex", "none"]} >
-                    <YouTube className=" videoborder " videoId={url} opts={optsmobile} />
-                </Flex>
-            </Flex>
-        )
-    } 
+        {
+            icon: LuPiggyBank,
+            iconBg: "#EEF2FF",
+            iconColor: "#4F46E5",
+            title: "Work with the best—without breaking the bank",
+            desc: "Chasescroll makes it affordable to focus on your guests. Benefit from lowest marketplace transaction rates, milestone contracts, and guaranteed satisfaction before funds disburse.",
+        },
+    ];
 
     return (
-        <Flex ref={ref} w={"full"} gap={"6"} px={["6", "6", "16"]} py={["6", "6", "14"]} flexDir={["column", "column", "row"]} bg={"white"} alignItems={"center"} >
+        <Flex
+            w={"full"}
+            bg={"white"}
+            py={["12", "16", "20"]}
+            px={["5", "6", "12"]}
+            justifyContent={"center"}
+            borderBottom={"1px solid"}
+            borderColor={"#F1F5F9"}
+        >
             <Flex
-                
-                style={{
-                    transform: isInView ? "none" : "translateX(-150px)",
-                    opacity: isInView ? 1 : 0,
-                    transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-                }}
-                w={["full", "full", "fit-content"]} >
-                <Flex w={"full"} h={["300px", "440px", "440px"]} rounded={"2xl"} >
-                    <Flex w={"full"} h={"full"} rounded={"2xl"} px={"2"} bgColor={"#F2F7F1"} justifyContent={"center"} alignItems={"center"} >
-                        {/* <Image src="/images/aboutplatform.png" alt='hometo' objectFit={"cover"} h={["full", "full"]} /> */}
-                        <Video url='jQz3p1z9OLQ' />
+                w={"full"}
+                maxW={"1280px"}
+                flexDir={["column", "column", "row"]}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+                gap={["8", "10", "14"]}
+            >
+                {/* Left Side: Phone Mockup Container */}
+                <Flex
+                    w={["full", "full", "46%"]}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                >
+                    <Box
+                        w={"full"}
+                        maxW={["360px", "420px", "460px"]}
+                        bg={"#F4F6FE"}
+                        rounded={["24px", "28px", "32px"]}
+                        p={["5", "6", "8"]}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        boxShadow={"0 8px 30px rgba(84, 101, 224, 0.06)"}
+                    >
+                        <Image
+                            src="/images/about-phone-mockup.png"
+                            alt="Chasescroll mobile app preview"
+                            w={["260px", "300px", "340px"]}
+                            maxW={"100%"}
+                            h={"auto"}
+                            objectFit={"contain"}
+                            transition={"transform 0.4s ease"}
+                            _hover={{ transform: "scale(1.02)" }}
+                        />
+                    </Box>
+                </Flex>
+
+                {/* Right Side: Headline, Perks Cards, CTA */}
+                <Flex
+                    ref={ref}
+                    w={["full", "full", "54%"]}
+                    flexDir={"column"}
+                    gap={["5", "6", "6"]}
+                >
+                    {/* Title */}
+                    <Box>
+                        <Text
+                            as="h2"
+                            fontSize={["28px", "32px", "38px"]}
+                            lineHeight={["120%", "120%", "115%"]}
+                            fontWeight={"800"}
+                            color={"#0F172A"}
+                            letterSpacing={"-0.02em"}
+                        >
+                            Up your <span style={{ color: primaryColor }}>event</span> game, it&apos;s easy.
+                        </Text>
+                    </Box>
+
+                    {/* Perks Cards */}
+                    <Flex flexDir={"column"} gap={"3.5"}>
+                        {perks.map((p, idx) => {
+                            const IconC = p.icon;
+                            return (
+                                <Flex
+                                    key={idx}
+                                    p={["4", "4.5", "5"]}
+                                    rounded={"18px"}
+                                    bg={"white"}
+                                    border={"1px solid"}
+                                    borderColor={"#E2E8F0"}
+                                    alignItems={"flex-start"}
+                                    gap={"4"}
+                                    boxShadow={"0 2px 10px rgba(0, 0, 0, 0.02)"}
+                                    transition={"all 0.2s ease"}
+                                    _hover={{
+                                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.05)",
+                                        borderColor: "#CBD5E1",
+                                    }}
+                                >
+                                    <Flex
+                                        w={"42px"}
+                                        h={"42px"}
+                                        rounded={"12px"}
+                                        bg={p.iconBg}
+                                        color={p.iconColor}
+                                        alignItems={"center"}
+                                        justifyContent={"center"}
+                                        flexShrink={"0"}
+                                    >
+                                        <IconC size={"20px"} />
+                                    </Flex>
+                                    <Flex flexDir={"column"} gap={"1"}>
+                                        <Text fontSize={["15px", "16px", "16.5px"]} fontWeight={"700"} color={"#0F172A"}>
+                                            {p.title}
+                                        </Text>
+                                        <Text fontSize={["12.5px", "13px", "13.5px"]} color={"#475569"} lineHeight={"155%"}>
+                                            {p.desc}
+                                        </Text>
+                                    </Flex>
+                                </Flex>
+                            );
+                        })}
+                    </Flex>
+
+                    {/* Bottom CTA Row with Trust Badge */}
+                    <Flex
+                        alignItems={["flex-start", "center", "center"]}
+                        flexDir={["column", "row", "row"]}
+                        gap={["3", "4", "5"]}
+                        pt={"2"}
+                    >
+                        <Flex
+                            as="button"
+                            onClick={() => push("/auth/signup")}
+                            alignItems={"center"}
+                            justifyContent={"center"}
+                            px={"7"}
+                            py={"3.5"}
+                            rounded={"full"}
+                            bg={primaryColor}
+                            color={"white"}
+                            fontSize={"14px"}
+                            fontWeight={"600"}
+                            cursor={"pointer"}
+                            boxShadow={"0 8px 24px rgba(84, 101, 224, 0.35)"}
+                            transition={"all 0.2s ease"}
+                            _hover={{
+                                opacity: 0.92,
+                                transform: "translateY(-1px)",
+                            }}
+                            whiteSpace={"nowrap"}
+                        >
+                            Sign Up now for free
+                        </Flex>
+
+                        <Flex alignItems={"center"} gap={"1.5"} color={"#64748B"}>
+                            <IoCheckmarkCircleOutline color={"#059669"} size={"18px"} />
+                            <Text fontSize={["12px", "12.5px", "13px"]} fontWeight={"500"}>
+                                Instant access to 10k+ verified listings
+                            </Text>
+                        </Flex>
                     </Flex>
                 </Flex>
-            </Flex>
-            <Flex
-                ref={reftwo}
-                style={{
-                    transform: isInViewtwo ? "none" : "translateX(+150px)",
-                    opacity: isInViewtwo ? 1 : 0,
-                    transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-                }}
-                w={"full"} flexDir={"column"} gap={"4"} >
-                <Text fontSize={["32px", "32px", "48px"]} lineHeight={"150%"} fontWeight={"700"} >Up your <span style={{ color: primaryColor }} >event</span> {`game, it's easy`}</Text>
-                <Flex flexDir={"column"} gap={"3"} mt={"2"} >
-                    <Flex gap={"3"}>
-                        <Flex w={"fit-content"} mt={"1"} >
-                            <GreenTickTwo />
-                        </Flex>
-                        <Flex flexDir={"column"} >
-                            <Text fontSize={"24px"} fontWeight={"600"} lineHeight={"120%"} >No cost to join</Text>
-                            <Text fontSize={"14px"} >Register and browse talent profiles, explore events, or even rent an item.</Text>
-                        </Flex>
-                    </Flex>
-                    <Flex gap={"3"}>
-                        <Flex w={"fit-content"} mt={"1"} >
-                            <GreenTickTwo />
-                        </Flex>
-                        <Flex flexDir={"column"} >
-                            <Text fontSize={"24px"} fontWeight={"600"} lineHeight={"120%"} >Request a service and hire top professionals</Text>
-                            <Text fontSize={"14px"} >{`Finding professionals doesn't have to be a task. Request a service while creating your event or you can search from the tabs!`}</Text>
-                        </Flex>
-                    </Flex>
-                    <Flex gap={"3"}>
-                        <Flex w={"fit-content"} mt={"1"} >
-                            <GreenTickTwo />
-                        </Flex>
-                        <Flex flexDir={"column"} >
-                            <Text fontSize={"24px"} fontWeight={"600"} lineHeight={"120%"} >Work with the best—without breaking the bank</Text>
-                            <Text fontSize={"14px"} >Chasescroll makes it affordable to focus on your guests and take advantage of low transaction rates</Text>
-                        </Flex>
-                    </Flex>
-                </Flex>
-                <CustomButton onClick={() => push("/auth?create=event")} text={"Create An Event"} px={"5"} width={"fit-content"} fontSize={"14px"} mt={"3"} borderRadius={"999px"} />
             </Flex>
         </Flex>
-    )
+    );
 }

@@ -1,161 +1,481 @@
-"use client"
-import useCustomTheme from '@/hooks/useTheme';
-import { NewDonationIcon, NewEventIcon, RentalIcon, ServiceIcon, StoreIcon } from '@/svg';
-import { Button, Flex, Image, Text } from '@chakra-ui/react';
-import { useInView } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import React, { useRef, useState } from 'react' 
-import { CustomButton } from '../shared';
+"use client";
+import useCustomTheme from "@/hooks/useTheme";
+import { NewDonationIcon, NewEventIcon, RentalIcon, ServiceIcon, StoreIcon } from "@/svg";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { useInView } from "framer-motion";
+import { useRouter } from "next/navigation";
+import React, { useRef, useState } from "react";
+import { CustomButton } from "../shared";
 
 export default function HeroSection() {
-
-
-    const ref: any = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true });
-    const reftwo: any = useRef(null);
-    const isInViewtwo = useInView(ref, { once: true });
+    const reftwo = useRef<HTMLDivElement>(null);
+    const isInViewtwo = useInView(reftwo, { once: true });
 
-    const [active, setActive] = useState("") 
-
-    const { primaryColor, borderColor } = useCustomTheme()
-    const { push } = useRouter()
+    const [active, setActive] = useState("event");
+    const { primaryColor } = useCustomTheme();
+    const { push } = useRouter();
 
     const clickHandler = (item: "kiosks" | "services" | "rentals" | "event" | "donation") => {
         if (item === "event") {
-            push(`/product`)
+            push(`/product`);
         } else if (item === "donation") {
-            push(`/product/fundraising`)
+            push(`/product/fundraising`);
         } else {
-            push(`/product/${item}`)
+            push(`/product/${item}`);
         }
-    }
+    };
+
+    const categories = [
+        { id: "event", label: "Event", icon: NewEventIcon, link: "event" },
+        { id: "kiosk", label: "Kiosk", icon: StoreIcon, link: "kiosks" },
+        { id: "service", label: "Services", icon: ServiceIcon, link: "services" },
+        { id: "rental", label: "Rentals", icon: RentalIcon, link: "rentals" },
+        { id: "fundraising", label: "Fundraising", icon: NewDonationIcon, link: "donation" },
+    ];
+
+    const partners = [
+        {
+            name: "Babcock University",
+            logo: "/images/partners/babcock.png",
+            height: ["24px", "28px", "32px"],
+        },
+        {
+            name: "Founder Institute",
+            logo: "/images/partners/founder-institute.png",
+            height: ["26px", "30px", "34px"],
+        },
+        {
+            name: "University of Lagos",
+            logo: "/images/partners/unilag.png",
+            height: ["24px", "28px", "32px"],
+        },
+        {
+            name: "Bells University",
+            logo: "/images/partners/bells.png",
+            height: ["24px", "28px", "32px"],
+        },
+        {
+            name: "LinkedIn Local Nigeria",
+            logo: "/images/partners/linkedin-local.png",
+            height: ["20px", "22px", "26px"],
+        },
+    ];
 
     return (
-        <Flex w={"full"} h={[ "100vh"]} color={"white"} pos={"relative"} >
-            <Flex pos={"absolute"} inset={"0px"} zIndex={"10"} style={{ background: "linear-gradient(116.54deg, rgba(84, 101, 224, 0) -7.35%, rgba(35, 61, 243, 0.2) 41.22%), linear-gradient(228.39deg, rgba(0, 0, 0, 0) -57.53%, rgba(0, 0, 0, 0.4) 90.44%), linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))" }} />
-            <Image src='/images/hero/newhero.jpg' alt='hero' w={"full"} objectFit={"cover"} />
-            <Flex pos={"absolute"} insetX={"0px"} bottom={"0px"} top={["64px", "64px", "101.03px"]} gap={"8"} px={["6", "6", "16"]} flexDirection={"column"} justifyContent={"center"} zIndex={"20"} >
-                <Text
-                    ref={ref}
+        <Flex w={"full"} flexDir={"column"} pos={"relative"} bg={"#05081E"}>
+            {/* Hero Main Area */}
+            <Flex
+                w={"full"}
+                minH={["650px", "700px", "760px"]}
+                color={"white"}
+                pos={"relative"}
+                overflow={"hidden"}
+                alignItems={"center"}
+                justifyContent={"center"}
+            >
+                {/* Background Artwork Image */}
+                <Box pos={"absolute"} inset={"0px"} zIndex={"1"}>
+                    <Image
+                        src="/images/hero/naija-hero-bg.jpg"
+                        alt="Hero Naija Vibes Background"
+                        w={"full"}
+                        h={"full"}
+                        objectFit={"cover"}
+                        objectPosition={["center center", "center center", "top"]}
+                    />
+                </Box>
+
+                {/* Subtle Gradient Overlay */}
+                <Box
+                    pos={"absolute"}
+                    inset={"0px"}
+                    zIndex={"2"}
                     style={{
-                        transform: isInView ? "none" : "translateY(-50px)",
-                        opacity: isInView ? 1 : 0,
-                        transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-                    }} maxW={"1100px"} fontSize={["42px", "42px", "60px"]} lineHeight={["120%", "120%", "75px"]} fontWeight={"700"} >Connecting event hosts in need to professionals who deliver.</Text>
+                        background:
+                            "linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.28) 40%, rgba(0, 0, 0, 0.55) 100%)",
+                    }}
+                />
+
+                {/* Main Content Container */}
                 <Flex
-                    ref={reftwo}
-                    style={{
-                        transform: isInViewtwo ? "none" : "translateY(+50px)",
-                        opacity: isInViewtwo ? 1 : 0,
-                        transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
-                        background: "linear-gradient(115.13deg, rgba(35, 61, 243, 0.2) 20.26%, rgba(21, 35, 141, 0.2) 65.99%), linear-gradient(265.89deg, rgba(0, 0, 0, 0) 18.07%, rgba(0, 0, 0, 0.6) 86.4%)"
-                    }} maxW={"833px"} px={["3", "3", "10"]} py={["6", "6", "10"]} rounded={"32px"} flexDir={"column"} alignItems={"center"} gap={"8"} zIndex={"15"} >
-                    <Flex w={["full", "fit-content", "fit-content"]} gap={["3", "3", "0px"]} justifyContent={"space-around"} alignItems={"center"} bgColor={"white"} p={"6px"} rounded={"full"} >
-                        <CustomButton onMouseOver={() => setActive("event")} onMouseOut={() => setActive("")} onClick={() => clickHandler("event")} text={
-                            <Flex alignItems={"center"} gap={"2"} >
-                                <Flex display={["none", "none", "flex"]} >
-                                    <NewEventIcon color={active === "event" ? "white" : "black"} />
-                                </Flex>
-                                <Text fontSize={["10px", "12px", "14px"]} >Event</Text>
-                            </Flex>
-                        } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "event" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "event" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <CustomButton onMouseOver={() => setActive("service")} onMouseOut={() => setActive("")} onClick={() => clickHandler("services")} text={
-                            <Flex alignItems={"center"} gap={"2"} >
-                                <Flex display={["none", "none", "flex"]} >
-                                    <ServiceIcon color={active === "service" ? "white" : "black"} />
-                                </Flex>
-                                <Text fontSize={["10px", "12px", "14px"]} >Service</Text>
-                            </Flex>
-                        } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "service" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "service" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <CustomButton onMouseOver={() => setActive("rental")} onMouseOut={() => setActive("")} onClick={() => clickHandler("rentals")} text={
-                            <Flex alignItems={"center"} gap={"2"} >
-                                <Flex display={["none", "none", "flex"]} >
-                                    <RentalIcon color={active === "rental" ? "white" : "black"} />
-                                </Flex>
-                                <Text fontSize={["10px", "12px", "14px"]} >Rental</Text>
-                            </Flex>
-                        } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "rental" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "rental" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        <CustomButton onMouseOver={() => setActive("kiosk")} onMouseOut={() => setActive("")} onClick={() => clickHandler("kiosks")} text={
-                            <Flex alignItems={"center"} gap={"2"} >
-                                <Flex display={["none", "none", "flex"]} >
-                                    <StoreIcon color={active === "kiosk" ? "white" : "black"} />
-                                </Flex>
-                                <Text fontSize={["10px", "12px", "14px"]} >Kiosk</Text>
-                            </Flex>
-                        } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "kiosk" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "kiosk" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        {/* <Flex w="fit-content" display={["none", "none", "flex"]} > */}
-                        <CustomButton onMouseOver={() => setActive("fundraising")} onMouseOut={() => setActive("")} onClick={() => clickHandler("donation")} text={
-                            <Flex alignItems={"center"} gap={"2"} >
-                                <Flex display={["none", "none", "flex"]} >
-                                    <NewDonationIcon color={active === "fundraising" ? "white" : "black"} />
-                                </Flex>
-                                <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
-                            </Flex>
-                        } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["fit-content", "107px", "140px"]} />
-                        {/* </Flex> */}
-                        {/* <Flex w={"fit-content"} position={"relative"} >
+                    w={"full"}
+                    maxW={"1280px"}
+                    px={["5", "6", "12"]}
+                    pt={["95px", "105px", "130px"]}
+                    pb={["35px", "45px", "65px"]}
+                    flexDir={"column"}
+                    alignItems={["flex-start", "flex-start", "center"]}
+                    textAlign={["left", "left", "center"]}
+                    zIndex={"10"}
+                    pos={"relative"}
+                >
+                    {/* Headline */}
+                    <Text
+                        ref={ref}
+                        as="h1"
+                        style={{
+                            transform: isInView ? "none" : "translateY(-20px)",
+                            opacity: isInView ? 1 : 0,
+                            transition: "all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1) 0.2s",
+                        }}
+                        maxW={"960px"}
+                        fontSize={["32px", "42px", "54px"]}
+                        lineHeight={["120%", "120%", "64px"]}
+                        fontWeight={"800"}
+                        letterSpacing={"-0.02em"}
+                        color={"white"}
+                    >
+                        Connecting event hosts in need to professionals who deliver.
+                    </Text>
 
-                            <Flex w={"30px"} onClick={() => setOpen((prev) => !prev)} rounded={"16px"} borderWidth={"1px"} borderColor={"black"} h={"30px"} pt={!open ? "2px" : "0px"} justifyContent={"center"} alignItems={"center"} ml={"auto"} display={["flex", "flex", "none"]}  >
-                                {open && (
-                                    <IoChevronUp size={"15px"} color='black' />
-                                )}
-                                {!open && (
-                                    <IoChevronDown size={"15px"} color='black' />
-                                )}
-                            </Flex>
-                            {open && (
-                                <Flex position={"absolute"} top={"50px"} zIndex={"40"} right={"0px"} >
-                                    <CustomButton onMouseOver={() => setActive("fundraising")} onMouseOut={() => setActive("")} onClick={() => clickHandler("donation")} text={
-                                        <Flex alignItems={"center"} gap={"2"} >
-                                            <Flex display={["none", "none", "flex"]} >
-                                                <NewDonationIcon color={active === "fundraising" ? "white" : "black"} />
-                                            </Flex>
-                                            <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
-                                        </Flex>
-                                    } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={active === "fundraising" ? primaryColor : "white"} border={"0px"} borderColor={borderColor} borderRadius={"32px"} fontWeight={"600"} color={active === "fundraising" ? "white" : "black"} width={["107px", "107px", "140px"]} />
-                                </Flex>
-                            )}
-                        </Flex> */}
-                    </Flex>
-                    {/* <Image src='/images/hero/filter.png' alt='filter' /> */}
+                    {/* Subtitle */}
+                    <Text
+                        maxW={"800px"}
+                        fontSize={["14px", "15px", "18px"]}
+                        lineHeight={["150%", "155%", "160%"]}
+                        color={"rgba(255, 255, 255, 0.95)"}
+                        fontWeight={"400"}
+                        mt={["3", "3.5", "4"]}
+                    >
+                        Find vetted talent, book verified event spaces, shop ceremonial Aso Ebi, and run seamless escrow-protected transactions across Africa.
+                    </Text>
 
-                    <Flex display={["none", "none", "flex"]} color={"black"} w={"fit-content"} borderWidth={"1px"} borderColor={borderColor} rounded={"full"} h={"fit-content"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
-                        <Flex _disabled={{ backgroundColor: "white", opacity: "100%" }} h={"70px"} bgColor={"white"} w={"200px"} opacity={"70%"} outlineColor={"transparent"} outline={"none"} textAlign={"center"} justifyContent={"center"} alignItems={"center"} roundedLeft={"full"} borderWidth={"0px"} borderRightWidth={"1px"} borderRightColor={borderColor} >
-                            Select Category
-                        </Flex>
-                        <Flex _disabled={{ backgroundColor: "white", opacity: "100%" }} h={"70px"} bgColor={"white"} w={"200px"} opacity={"70%"} rounded={"0px"} textAlign={"center"} justifyContent={"center"} alignItems={"center"} borderRightWidth={"1px"} borderWidth={"0px"} borderRightColor={borderColor} >
-                            Select State
-                        </Flex>
-                        {/* <CustomSelect placeholder='Select Category' /> */}
-                        <Flex _disabled={{ backgroundColor: "white" }} bgColor={"white"} justifyContent={"center"} alignItems={"center"} opacity={"70%"} px={"2"} h={"70px"} w={"200px"} outline={"none"} rounded={"0px"} borderWidth={"0px"} borderLeftWidth={"1px"} borderRightColor={borderColor} >
-                            Search business name
-                        </Flex>
-                        <Button disabled={true} h={"70px"} w={"140px"} color={"white"} outline={"none"} _hover={{ backgroundColor: primaryColor }} bgColor={primaryColor} roundedRight={"full"} borderRightWidth={"0px"} borderWidth={"0px"} borderRightColor={borderColor} >
-                            Search
-                        </Button>
+                    {/* Mobile Only: CTA Action Buttons (Get started & Login) */}
+                    <Flex
+                        display={["flex", "flex", "none"]}
+                        w={"full"}
+                        alignItems={"center"}
+                        gap={"3"}
+                        mt={"4"}
+                    >
+                        <CustomButton
+                            onClick={() => push("/auth/signup")}
+                            text={"Get started"}
+                            height={"48px"}
+                            fontSize={"15px"}
+                            backgroundColor={primaryColor}
+                            borderRadius={"999px"}
+                            color={"white"}
+                            flex={"1.4"}
+                        />
+                        <CustomButton
+                            onClick={() => push("/auth")}
+                            text={"Login"}
+                            height={"48px"}
+                            fontSize={"15px"}
+                            backgroundColor={"transparent"}
+                            borderWidth={"1px"}
+                            borderColor={"rgba(255, 255, 255, 0.8)"}
+                            borderRadius={"999px"}
+                            color={"white"}
+                            flex={"1"}
+                        />
                     </Flex>
-                    <Image src='/images/hero/brandlogo.png' alt='brand' ml={"4"} />
+
+                    {/* Desktop Category Filter Bar */}
+                    <Flex
+                        ref={reftwo}
+                        style={{
+                            transform: isInViewtwo ? "none" : "translateY(+20px)",
+                            opacity: isInViewtwo ? 1 : 0,
+                            transition: "all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1) 0.3s",
+                        }}
+                        display={["none", "none", "flex"]}
+                        w={"fit-content"}
+                        py={"1.5"}
+                        px={"2"}
+                        bg={"rgba(0, 0, 0, 0.45)"}
+                        backdropFilter={"blur(20px)"}
+                        rounded={"full"}
+                        border={"1px solid rgba(255, 255, 255, 0.2)"}
+                        gap={"3"}
+                        alignItems={"center"}
+                        mt={"8"}
+                    >
+                        {categories.map((cat) => {
+                            const IconComponent = cat.icon;
+                            const isSelected = active === cat.id;
+                            return (
+                                <Flex
+                                    key={cat.id}
+                                    as="button"
+                                    onClick={() => {
+                                        setActive(cat.id);
+                                        clickHandler(cat.link as any);
+                                    }}
+                                    alignItems={"center"}
+                                    gap={"2"}
+                                    px={"5"}
+                                    py={"2.5"}
+                                    rounded={"full"}
+                                    bg={isSelected ? primaryColor : "transparent"}
+                                    color={"white"}
+                                    transition={"all 0.2s ease"}
+                                    cursor={"pointer"}
+                                    whiteSpace={"nowrap"}
+                                    _hover={{
+                                        bg: isSelected ? primaryColor : "rgba(255, 255, 255, 0.15)",
+                                    }}
+                                >
+                                    <IconComponent color={"white"} />
+                                    <Text fontSize={"14px"} fontWeight={"600"}>
+                                        {cat.label}
+                                    </Text>
+                                </Flex>
+                            );
+                        })}
+                    </Flex>
+
+                    {/* Mobile Category Pills (2 rows matching the mobile design) */}
+                    <Flex
+                        display={["flex", "flex", "none"]}
+                        flexDir={"column"}
+                        gap={"2.5"}
+                        w={"full"}
+                        mt={"4"}
+                    >
+                        {/* Row 1: Event, Kiosk, Services */}
+                        <Flex gap={"2"} w={"full"}>
+                            {categories.slice(0, 3).map((cat) => {
+                                const IconComponent = cat.icon;
+                                const isSelected = active === cat.id;
+                                return (
+                                    <Flex
+                                        key={cat.id}
+                                        as="button"
+                                        onClick={() => {
+                                            setActive(cat.id);
+                                            clickHandler(cat.link as any);
+                                        }}
+                                        alignItems={"center"}
+                                        justifyContent={"center"}
+                                        gap={"1.5"}
+                                        px={"3"}
+                                        py={"2"}
+                                        rounded={"full"}
+                                        bg={isSelected ? primaryColor : "rgba(0, 0, 0, 0.35)"}
+                                        backdropFilter={"blur(16px)"}
+                                        border={isSelected ? "none" : "1px solid rgba(255, 255, 255, 0.2)"}
+                                        color={"white"}
+                                        fontSize={"13px"}
+                                        fontWeight={"600"}
+                                        flex={"1"}
+                                        whiteSpace={"nowrap"}
+                                    >
+                                        <IconComponent color={"white"} />
+                                        <Text>{cat.label}</Text>
+                                    </Flex>
+                                );
+                            })}
+                        </Flex>
+
+                        {/* Row 2: Rentals, Fundraising */}
+                        <Flex gap={"2"} w={"full"}>
+                            {categories.slice(3, 5).map((cat) => {
+                                const IconComponent = cat.icon;
+                                const isSelected = active === cat.id;
+                                return (
+                                    <Flex
+                                        key={cat.id}
+                                        as="button"
+                                        onClick={() => {
+                                            setActive(cat.id);
+                                            clickHandler(cat.link as any);
+                                        }}
+                                        alignItems={"center"}
+                                        justifyContent={"center"}
+                                        gap={"1.5"}
+                                        px={"4"}
+                                        py={"2"}
+                                        rounded={"full"}
+                                        bg={isSelected ? primaryColor : "rgba(0, 0, 0, 0.35)"}
+                                        backdropFilter={"blur(16px)"}
+                                        border={isSelected ? "none" : "1px solid rgba(255, 255, 255, 0.2)"}
+                                        color={"white"}
+                                        fontSize={"13px"}
+                                        fontWeight={"600"}
+                                        flex={"1"}
+                                        whiteSpace={"nowrap"}
+                                    >
+                                        <IconComponent color={"white"} />
+                                        <Text>{cat.label}</Text>
+                                    </Flex>
+                                );
+                            })}
+                        </Flex>
+                    </Flex>
+
+                    {/* Mobile LinkedIn Local Nigeria Card (at bottom of content) */}
+                    <Flex
+                        display={["flex", "flex", "none"]}
+                        w={"full"}
+                        mt={"5"}
+                        p={"3.5"}
+                        rounded={"20px"}
+                        bg={"rgba(0, 0, 0, 0.55)"}
+                        backdropFilter={"blur(16px)"}
+                        border={"1px solid rgba(255, 255, 255, 0.15)"}
+                        alignItems={"center"}
+                        gap={"3"}
+                    >
+                        <Box
+                            w={"46px"}
+                            h={"46px"}
+                            rounded={"full"}
+                            overflow={"hidden"}
+                            border={"2px solid #5465E0"}
+                            flexShrink={"0"}
+                        >
+                            <Image
+                                src="/images/newlink.png"
+                                alt="LinkedIn Local Team"
+                                w={"full"}
+                                h={"full"}
+                                objectFit={"cover"}
+                            />
+                        </Box>
+                        <Text fontSize={"12px"} color={"white"} lineHeight={"140%"} fontWeight={"500"}>
+                            Chasescroll is the official ticketing partner for LinkedIn local Nigeria events
+                        </Text>
+                    </Flex>
                 </Flex>
-                <Flex pos={["relative", "absolute"]} ml={"auto"} mt={"150px"} display={["none", "none","flex"]} zIndex={"10"} bottom={"10%"} right={"0px"} >
-                    <Flex flexDir={"column"} gap={"3"} zIndex={"10"} alignItems={"center"} >
-                        <Image w={"250px"} src='/images/newlink.png' alt='newlink' />
-                        <Text maxW={"379px"} textAlign={"center"} >Chasescroll is the official ticketing partner for LinkedIn  local Nigeria events</Text>
-                    </Flex>
-                    <Flex h={"59px"} ml={"-120px"} mr={"-50px"} mt={"12"} transform="rotate(-10deg)" w={"200px"} bgColor={"#5465E0"} >
 
+                {/* Desktop LinkedIn Local Nigeria Badge (Positioned at the right) */}
+                <Flex
+                    display={["none", "none", "flex"]}
+                    pos={"absolute"}
+                    right={"35px"}
+                    bottom={"25px"}
+                    zIndex={"20"}
+                    flexDir={"column"}
+                    alignItems={"center"}
+                    maxW={"280px"}
+                >
+                    <Flex pos={"relative"} alignItems={"center"} justifyContent={"center"}>
+                        {/* Blue angled accent stripe behind circle */}
+                        <Box
+                            pos={"absolute"}
+                            w={"130px"}
+                            h={"36px"}
+                            bg={"#5465E0"}
+                            transform={"rotate(-10deg)"}
+                            right={"-24px"}
+                            rounded={"md"}
+                            zIndex={"1"}
+                        />
+                        {/* Circular Team Photo */}
+                        <Box
+                            w={"140px"}
+                            h={"140px"}
+                            rounded={"full"}
+                            overflow={"hidden"}
+                            border={"4px solid #5465E0"}
+                            pos={"relative"}
+                            zIndex={"2"}
+                            boxShadow={"0 10px 25px rgba(0, 0, 0, 0.45)"}
+                        >
+                            <Image
+                                src="/images/newlink.png"
+                                alt="LinkedIn Local Nigeria Team"
+                                w={"full"}
+                                h={"full"}
+                                objectFit={"cover"}
+                            />
+                        </Box>
                     </Flex>
+
+                    {/* Frosted text pill directly below badge */}
+                    <Box
+                        mt={"3"}
+                        px={"4"}
+                        py={"2.5"}
+                        rounded={"16px"}
+                        bg={"rgba(0, 0, 0, 0.65)"}
+                        backdropFilter={"blur(12px)"}
+                        border={"1px solid rgba(255, 255, 255, 0.15)"}
+                        textAlign={"center"}
+                        zIndex={"10"}
+                        boxShadow={"0 8px 20px rgba(0, 0, 0, 0.3)"}
+                    >
+                        <Text fontSize={"11.5px"} color={"white"} lineHeight={"140%"}>
+                            Chasescroll is the official ticketing partner for LinkedIn local Nigeria events
+                        </Text>
+                    </Box>
                 </Flex>
+            </Flex>
 
-                <Flex pos={["relative"]} ml={"auto"} display={["flex", "none", "none"]} zIndex={"10"} right={"0px"} >
-                    <Flex flexDir={"column"} gap={"3"} zIndex={"10"} alignItems={"center"} >
-                        <Image w={"150px"} src='/images/newlink.png' alt='newlink' />
-                        <Text maxW={"223px"} fontSize={"10px"} p={"3"} style={{background: "linear-gradient(268.4deg, rgba(35, 61, 243, 0.05) -140.32%, rgba(21, 35, 141, 0.05) -40.12%), linear-gradient(240.97deg, rgba(0, 0, 0, 0) 18.59%, rgba(0, 0, 0, 0.2) 261.49%)"}} textAlign={"center"} >Chasescroll is the official ticketing partner for LinkedIn  local Nigeria events</Text>
+            {/* Partner / Trust Strip */}
+            <Flex
+                w={"full"}
+                bg={"white"}
+                borderBottom={"1px solid"}
+                borderColor={"#F1F5F9"}
+                py={["4", "4", "5"]}
+                px={["4", "6", "12"]}
+                justifyContent={"center"}
+                alignItems={"center"}
+                overflow={"hidden"}
+            >
+                <Flex
+                    w={"full"}
+                    maxW={"1280px"}
+                    flexDir={["column", "row", "row"]}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    gap={["4", "6", "8"]}
+                >
+                    {/* Left: Trusted Partner Indicator */}
+                    <Flex alignItems={"center"} gap={"2.5"} flexShrink={"0"}>
+                        <Box w={"10px"} h={"10px"} rounded={"full"} bg={"#00B074"} flexShrink={"0"} />
+                        <Text
+                            fontSize={["12px", "12px", "13px"]}
+                            fontWeight={"700"}
+                            color={"#64748B"}
+                            letterSpacing={"0.8px"}
+                            textTransform={"uppercase"}
+                            whiteSpace={"nowrap"}
+                        >
+                            TRUSTED PARTNER
+                        </Text>
                     </Flex>
-                    <Flex h={"35px"} ml={"-120px"} mr={"-50px"} mt={"9"} transform="rotate(-10deg)" w={"200px"} bgColor={"#5465E0"} >
 
+                    {/* Logos Container */}
+                    <Flex
+                        w={["full", "auto", "auto"]}
+                        flex={"1"}
+                        alignItems={"center"}
+                        justifyContent={["space-between", "space-evenly", "space-evenly"]}
+                        gap={["5", "8", "10"]}
+                        overflowX={"auto"}
+                        className="hide-scrollbar"
+                        py={"1"}
+                        pl={["0", "6", "10"]}
+                    >
+                        {partners.map((p, idx) => (
+                            <Flex
+                                key={idx}
+                                flexShrink={"0"}
+                                alignItems={"center"}
+                                justifyContent={"center"}
+                                h={["32px", "36px", "40px"]}
+                                opacity={"0.9"}
+                                _hover={{ opacity: "1", transform: "scale(1.04)" }}
+                                transition={"all 0.2s ease"}
+                            >
+                                <Image
+                                    src={p.logo}
+                                    alt={p.name}
+                                    h={p.height}
+                                    w={"auto"}
+                                    objectFit={"contain"}
+                                />
+                            </Flex>
+                        ))}
                     </Flex>
                 </Flex>
             </Flex>
         </Flex>
-    )
+    );
 }

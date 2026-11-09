@@ -52,7 +52,7 @@ function HomeNavbar(
             link: "/home/about-us"
         },
         {
-            label: "FAQ",
+            label: "FAQ'S",
             link: "/home#faq"
         },
         // {
@@ -74,28 +74,64 @@ function HomeNavbar(
     const pathname = usePathname();
     const router = useRouter();
 
-    const { primaryColor } = useCustomTheme()
+    const { primaryColor } = useCustomTheme();
+    const isScrolled = yaxis > 15;
+    const isLightPage = pathname?.includes("term") || pathname?.includes("privacy");
 
     const clickHandler = (item: string) => {
-        router?.push(item)
-        // onClose()
-    }
+        router?.push(item);
+    };
 
     return (
         <>
             <Flex position={"absolute"} top={"0px"} />
             <Flex
                 style={{
-                    backgroundColor: (yaxis === 0) ? "transparent" : "white",
-                }} w={"full"} position={"fixed"} zIndex={"100"} top={"0px"} color={(pathname?.includes("term") || pathname?.includes("privacy")) ? "black" : (yaxis === 0) ? "white" : "black"} height={["64px", "64px", "101.03px"]} px={["6", "6", "12"]} justifyContent={"space-between"} alignItems={"center"}  >
-                <Flex onClick={() => router.push("/")} as={"button"} alignItems={"center"} gap={"2"} >
+                    backgroundColor: isScrolled || isLightPage ? "white" : "transparent",
+                    boxShadow: isScrolled ? "0 4px 20px rgba(0, 0, 0, 0.07)" : "none",
+                    borderBottom: isScrolled ? "1px solid #E2E8F0" : "none",
+                    transition: "background-color 0.25s ease, box-shadow 0.25s ease",
+                }}
+                w={"full"}
+                position={"fixed"}
+                zIndex={"100"}
+                top={"0px"}
+                color={isLightPage || isScrolled ? "black" : "white"}
+                height={["64px", "64px", "101.03px"]}
+                px={["6", "6", "12"]}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+            >
+                <Flex onClick={() => router.push("/")} as={"button"} alignItems={"center"} gap={"2"}>
                     <Image width={["32px", "32px", "60px"]} src={"/assets/logo.png"} alt="logo" />
-                    <Flex flexDir={"column"} alignItems={"start"} >
-                        <Text fontWeight={"bold"} fontSize={["14px", "14px", "16px"]} color={(pathname?.includes("term") || pathname?.includes("privacy")) ? primaryColor : (yaxis === 0) ? "white" : primaryColor} >Chasescroll</Text>
-                        <Text fontWeight={"medium"} fontStyle={"italic"} fontSize={["9px", "9px", "10px"]}>Discover. Connect. Elevate Your Events</Text>
+                    <Flex flexDir={"column"} alignItems={"start"}>
+                        <Text
+                            fontWeight={"bold"}
+                            fontSize={["14px", "14px", "16px"]}
+                            color={isLightPage || isScrolled ? primaryColor : "white"}
+                        >
+                            Chasescroll
+                        </Text>
+                        <Text fontWeight={"normal"} fontStyle={"italic"} fontSize={["10px", "10px", "11px"]} opacity={0.9}>
+                            We build memories.
+                        </Text>
                     </Flex>
                 </Flex>
-                <Flex h={"56px"} display={["none", "none", "none", "none", "flex"]} alignItems={"center"} px={"6"} rounded={"full"} style={{ background: yaxis === 0 ? "linear-gradient(265.89deg, rgba(0, 0, 0, 0) 18.07%, rgba(0, 0, 0, 0.1) 86.4%)" : "white" }} gap={"8"} >
+                <Flex
+                    h={"56px"}
+                    display={["none", "none", "none", "none", "flex"]}
+                    alignItems={"center"}
+                    px={"7"}
+                    rounded={"full"}
+                    style={{
+                        background: isScrolled || isLightPage
+                            ? "#F8FAFC"
+                            : "rgba(0, 0, 0, 0.35)",
+                        backdropFilter: "blur(16px)",
+                        border: isScrolled || isLightPage ? "1px solid #E2E8F0" : "1px solid rgba(255, 255, 255, 0.18)",
+                    }}
+                    gap={"8"}
+                >
                     {homelink?.map((item: {
                         label: string,
                         link: string,
@@ -119,7 +155,7 @@ function HomeNavbar(
                                             lineHeight={"22.5px"} fontWeight={"semibold"}
                                             cursor={"pointer"} variant="outline" size="sm">
                                             <Flex gap={"3"} lineHeight={"22.5px"} fontWeight={"semibold"} alignItems={"center"} _hover={{ color: primaryColor }} >
-                                                <Text color={(pathname?.includes("term") || pathname?.includes("privacy")) ? "black" : (yaxis === 0) ? "white" : "black"} lineHeight={"22.5px"} fontWeight={"semibold"} >{item?.label}</Text> <IoChevronDown color={(pathname?.includes("term") || pathname?.includes("privacy")) ? "black" : (yaxis === 0) ? "white" : "black"} />
+                                                <Text color={isLightPage || isScrolled ? "black" : "white"} lineHeight={"22.5px"} fontWeight={"semibold"} >{item?.label}</Text> <IoChevronDown color={isLightPage || isScrolled ? "black" : "white"} />
                                             </Flex>
                                         </Button>
                                     </Menu.Trigger>
@@ -148,9 +184,29 @@ function HomeNavbar(
                     })}
                 </Flex>
                 {!token && (
-                    <Flex display={["none", "none", "none", "none", "flex"]} gap={"4"} >
-                        <CustomButton onClick={() => clickHandler("/auth")} text={"Login"} width={"152px"} backgroundColor={"white"} height={"48px"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"999px"} />
-                        <CustomButton onClick={() => clickHandler("/auth/signup")} text={"Get Started"} width={"152px"} backgroundColor={primaryColor} height={"48px"} borderWidth={"1px"} borderColor={primaryColor} color={"white"} borderRadius={"999px"} />
+                    <Flex display={["none", "none", "none", "none", "flex"]} gap={"3.5"}>
+                        <CustomButton
+                            onClick={() => clickHandler("/auth")}
+                            text={"Login"}
+                            width={"120px"}
+                            backgroundColor={isScrolled || isLightPage ? "white" : "transparent"}
+                            height={"46px"}
+                            borderWidth={"1px"}
+                            borderColor={isScrolled || isLightPage ? primaryColor : "rgba(255, 255, 255, 0.7)"}
+                            color={isScrolled || isLightPage ? primaryColor : "white"}
+                            borderRadius={"999px"}
+                        />
+                        <CustomButton
+                            onClick={() => clickHandler("/auth/signup")}
+                            text={"Get started"}
+                            width={"135px"}
+                            backgroundColor={primaryColor}
+                            height={"46px"}
+                            borderWidth={"0px"}
+                            borderColor={primaryColor}
+                            color={"white"}
+                            borderRadius={"999px"}
+                        />
                     </Flex>
                 )}
                 {token && (
@@ -160,10 +216,22 @@ function HomeNavbar(
                 )}
                 <Drawer.Root size={"xs"}>
                     <Drawer.Trigger asChild>
-                        <Flex display={["flex", "flex", "flex", "flex", "none"]} cursor={"pointer"} >
+                        <Flex
+                            display={["flex", "flex", "flex", "flex", "none"]}
+                            cursor={"pointer"}
+                            w={"44px"}
+                            h={"44px"}
+                            rounded={"14px"}
+                            bg={isScrolled || isLightPage ? "#F1F5F9" : "rgba(255, 255, 255, 0.15)"}
+                            backdropFilter={"blur(10px)"}
+                            border={"1px solid"}
+                            borderColor={isScrolled || isLightPage ? "#E2E8F0" : "rgba(255, 255, 255, 0.2)"}
+                            justifyContent={"center"}
+                            alignItems={"center"}
+                        >
                             <HambergerMenu
-                                size="30"
-                                color={(pathname?.includes("term") || pathname?.includes("privacy")) ? primaryColor : (yaxis === 0) ? "white" : primaryColor}
+                                size="22"
+                                color={isLightPage || isScrolled ? primaryColor : "white"}
                             />
                         </Flex>
                     </Drawer.Trigger>
